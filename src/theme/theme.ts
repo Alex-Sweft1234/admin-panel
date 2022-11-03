@@ -93,5 +93,24 @@ export const theme: Theme = createTheme({
         },
       },
     },
+    MuiSnackbarContent: {
+      styleOverrides: {
+        root: {
+          flexWrap: 'nowrap',
+          fontSize: 14,
+          fontWeight: 400,
+          borderRadius: 4,
+          alignItems: 'center',
+          lineHeight: 1.25,
+          textAlign: 'center',
+          boxShadow: 'none',
+          backgroundColor: '#E6E6FA',
+        },
+        message: {
+          flex: '0 0 100%',
+          fontWeight: 400,
+        },
+      },
+    },
   },
 })

@@ -72,9 +72,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build:local": "react-scripts build",
+    "build:xtest": "env-cmd -f .env.test react-scripts build",
+    "build:production": "env-cmd -f .env.production react-scripts build",
+    "postbuild:xtest": "/bin/gzip -kv9 build/static/js/*.js && /bin/gzip -kv9 build/static/css/*.css && node ftp-xtest.js",
+    "postbuild:production": "/bin/gzip -kv9 build/static/js/*.js && /bin/gzip -kv9 build/static/css/*.css && node ssh-production.js"
   },
   "eslintConfig": {
     "extends": [

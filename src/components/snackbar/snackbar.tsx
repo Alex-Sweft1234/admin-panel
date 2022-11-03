@@ -72,7 +72,7 @@ export const Snackbar: React.FC<SnackbarProps & WithPlannerProps> = withPlanner(
                           {Array.isArray(val) ? (
                             val.map((v, i) => <p key={i}>{str.normalize(v)}</p>)
                           ) : (
-                            <p>{str.normalize(val)}</p>
+                            <p id="1">{str.normalize(val)}</p>
                           )}
                         </Box>
                       ))}

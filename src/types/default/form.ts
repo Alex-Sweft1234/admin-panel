@@ -10,9 +10,6 @@ export type SnackbarProps = {
   onClose?(): void
 }
 
-export type messageVariants = 'success' | 'warning' | 'error' | 'info' | 'reset'
-export type Message = string[]
-
 export type InputType =
   | 'button'
   | 'checkbox'
