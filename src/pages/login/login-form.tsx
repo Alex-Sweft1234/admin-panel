@@ -3,10 +3,12 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Grid } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { FormProps } from '../../types/default'
 import { TextInput, PasswordInput, validation, Snackbar, SubmitButton } from '../../components'
-// import { useReduxDispatch } from '../../hooks'
+import { useReduxDispatch } from '../../hooks'
 import { signin } from '../../api'
+import { AuthAction } from '../../store/auth'
 
 type SignInProps = { login: string; password: string }
 
@@ -15,8 +17,9 @@ const schema = validation({
   password: yup.string().required().length(6),
 })
 
-export const SigninForm: React.FC = (): JSX.Element => {
-  // const dispatch = useReduxDispatch()
+export const LoginForm: React.FC = (): JSX.Element => {
+  const navigate = useNavigate()
+  const dispatch = useReduxDispatch()
 
   const hookForm = useForm<any>({
     defaultValues: {},
@@ -38,7 +41,7 @@ export const SigninForm: React.FC = (): JSX.Element => {
 
     return await signin(login, password.replace(/\s/g, ''))
       .then((res) => {
-        setFormProps({ ...formProps, snackbar: { ...formProps.snackbar, message: undefined }, processed: false })
+        dispatch(AuthAction({ onSuccess: () => navigate('../') }))
       })
       .catch((err) => {
         console.log(err)

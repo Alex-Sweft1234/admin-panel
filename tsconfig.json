@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["es6", "dom.iterable", "dom"],
     "noImplicitAny": true,
     "removeComments": true,
     "noImplicitThis": true,

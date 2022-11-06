@@ -45,17 +45,8 @@ export const fetchPrivateAPIToken = async (username: string, password: string) =
     })
 }
 
-const reFetchPrivateAPIToken = (refreshToken: string) =>
-  apiFetchData({
-    url: '/auth/refresh',
-    method: 'post',
-    headers: {
-      Authorization: `Bearer ${refreshToken}`,
-    },
-  })
-
 export const withPrivateAPIToken = async (config: AxiosRequestConfig) => {
-  const token = ls.get<{ access_token?: string; refresh_token?: string }>(TOKEN.PRIVATE)
+  const token = ls.get<{ access_token?: string }>(TOKEN.PRIVATE)
 
   if (!(token && token.access_token)) {
     return apiFetchData(config)
@@ -69,31 +60,12 @@ export const withPrivateAPIToken = async (config: AxiosRequestConfig) => {
       })
       .catch((e) => {
         if (e.response.status === ApiAnswerStatus.UNAUTHENTICATED) {
-          return reFetchPrivateAPIToken(token.refresh_token || '')
-            .then((result) => {
-              ls.remove(TOKEN.PRIVATE)
-              ls.set(TOKEN.PRIVATE, result)
-
-              return apiFetchData({
-                ...config,
-                headers: {
-                  Authorization: `Bearer ${result.access_token}`,
-                },
-              })
-            })
-            .catch((err) => {
-              if (err.response.status === ApiAnswerStatus.UNAUTHENTICATED) {
-                ls.remove(TOKEN.PRIVATE)
-                throw err
-              } else {
-                return apiFetchData({ ...config })
-              }
-            })
+          ls.remove(TOKEN.PRIVATE)
+          throw e.response.data
         } else if (e.response.status === ApiAnswerStatus.NEED_FULL_REGISTER) {
-          throw e.response
-        } else {
-          throw e
+          throw e.response.data
         }
+        throw e
       })
   }
 }
