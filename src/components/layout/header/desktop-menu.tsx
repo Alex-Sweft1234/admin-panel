@@ -53,7 +53,7 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette }: Theme) => ({
     display: 'block',
     cursor: 'pointer',
     textDecoration: 'none!important',
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: 400,
     color: `${palette.text.secondary}!important`,
     position: 'relative',

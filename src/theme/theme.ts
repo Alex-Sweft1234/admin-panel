@@ -48,9 +48,6 @@ export const theme: Theme = createTheme({
         paperFullScreen: {
           height: 'auto',
         },
-        paperWidthSm: {
-          maxWidth: '500px!important',
-        },
       },
     },
     MuiDialogTitle: {
@@ -59,14 +56,16 @@ export const theme: Theme = createTheme({
           position: 'relative',
           backgroundColor: 'transparent',
           textAlign: 'center',
-          fontSize: 26,
+          fontSize: 28,
           fontWeight: 600,
         },
       },
     },
     MuiDialogContent: {
       styleOverrides: {
-        root: {},
+        root: {
+          fontSize: 18,
+        },
       },
     },
     MuiFilledInput: {
@@ -172,6 +171,7 @@ export const theme: Theme = createTheme({
         root: {
           border: '0 none',
           textAlign: 'center',
+          fontSize: 18,
         },
         head: {
           backgroundColor: palette.primary.main,
