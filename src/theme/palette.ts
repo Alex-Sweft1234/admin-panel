@@ -11,6 +11,12 @@ const palette = createPalette({
 
   error: { main: '#FF4D4A' },
 
+  text: {
+    primary: '#335DA8',
+    secondary: '#FFFFFF',
+    disabled: 'rgba(46, 52, 66, .5)',
+  },
+
   action: {
     active: '#335DA8',
     hover: '#335DA8',

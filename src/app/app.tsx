@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { AuthAction } from '../store/auth'
 import { RoutesRoot } from './routes'
 import { useReduxDispatch } from '../hooks'
+import { Layout } from '../components'
 
 export const App = () => {
   const dispatch = useReduxDispatch()
@@ -10,5 +11,9 @@ export const App = () => {
   useEffect(() => {
     dispatch(AuthAction({}))
   }, [])
-  return <RoutesRoot />
+  return (
+    <Layout>
+      <RoutesRoot />
+    </Layout>
+  )
 }

@@ -15,7 +15,7 @@ export const AuthReducer = (state: AuthProps = initialState, action: AUTH): Auth
     case FETCH_AUTH_REQUEST:
       return { ...state, loading: true, auth: false }
     case FETCH_AUTH_SUCCESS:
-      return { data: payload?.user, loading: false, error: undefined, auth: true }
+      return { data: payload?.data, loading: false, error: undefined, auth: true }
     case FETCH_AUTH_FAILURE:
       return { data, loading: false, error: payload, auth: false }
     default:

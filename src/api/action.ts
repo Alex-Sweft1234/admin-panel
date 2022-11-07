@@ -7,3 +7,9 @@ export const auth = async () =>
     url: '/admin/get',
     method: 'get',
   })
+
+export const getUsers = async () =>
+  withPrivateAPIToken({
+    url: '/admin/users/get',
+    method: 'get',
+  })

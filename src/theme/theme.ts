@@ -20,7 +20,55 @@ export const theme: Theme = createTheme({
     },
   },
   palette,
+  typography: {
+    h2: {
+      fontSize: 28,
+      fontWeight: 600,
+      color: palette.primary.main,
+      textTransform: 'uppercase',
+      marginBottom: 30,
+    },
+  },
   components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          height: 60,
+        },
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          width: '100%',
+          margin: 0,
+          padding: '20px 0',
+          borderRadius: 8,
+        },
+        paperFullScreen: {
+          height: 'auto',
+        },
+        paperWidthSm: {
+          maxWidth: '500px!important',
+        },
+      },
+    },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          position: 'relative',
+          backgroundColor: 'transparent',
+          textAlign: 'center',
+          fontSize: 26,
+          fontWeight: 600,
+        },
+      },
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {},
+      },
+    },
     MuiFilledInput: {
       styleOverrides: {
         root: {
@@ -109,6 +157,28 @@ export const theme: Theme = createTheme({
         message: {
           flex: '0 0 100%',
           fontWeight: 400,
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          '-webkit-tap-highlight-color': 'transparent',
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          border: '0 none',
+          textAlign: 'center',
+        },
+        head: {
+          backgroundColor: palette.primary.main,
+          color: palette.text.secondary,
+        },
+        body: {
+          borderBottom: `1px solid ${palette.primary.main}`,
         },
       },
     },
