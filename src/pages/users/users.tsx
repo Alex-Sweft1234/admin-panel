@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, SyntheticEvent } from 'react'
 import { Box, Container, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
-import { getUsers } from '../../api'
+import { getChartUsers, getUsers } from '../../api'
 import { User } from '../../types/default'
 import { UserEditModal } from './modals'
 import { PaginationCustom } from '../../components/pagination'
@@ -20,9 +20,18 @@ type UserList = {
   last_page: number
 }
 
+type UserChart = {
+  labels: string[]
+  datasets: number[]
+}
+
 export const UsersPage: React.FC = (): JSX.Element => {
   const [page, setPage] = useState<number>(1)
   const [perPage, setPerPage] = useState<number>(6)
+  const [chart, setChart] = useState<UserChart>({
+    labels: [],
+    datasets: [],
+  })
   const [users, setUsers] = useState<UserList>({
     items: [],
     page,
@@ -40,6 +49,10 @@ export const UsersPage: React.FC = (): JSX.Element => {
     show: false,
   })
 
+  const usersChart = useCallback(() => {
+    getChartUsers().then((res) => setChart(res.data))
+  }, [])
+
   const usersList = useCallback((p: number, per: number) => {
     getUsers(p, per).then((res) => setUsers(res.data))
   }, [])
@@ -49,6 +62,7 @@ export const UsersPage: React.FC = (): JSX.Element => {
   }
 
   useEffect(() => {
+    usersChart()
     usersList(page, perPage)
   }, [])
 
@@ -63,7 +77,7 @@ export const UsersPage: React.FC = (): JSX.Element => {
       <Container maxWidth="lg">
         <Box mb={6} width={900}>
           <Typography variant="h2">График регистрации пользователей</Typography>
-          <UsersChart />
+          <UsersChart dataChart={chart} />
         </Box>
         <Typography variant="h2">Список пользователей</Typography>
         <Table>
