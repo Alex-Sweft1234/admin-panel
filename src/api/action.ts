@@ -1,4 +1,6 @@
-import { withPrivateAPIToken, fetchPrivateAPIToken, apiFetchData } from './service'
+import * as ls from 'local-storage'
+import { withPrivateAPIToken, fetchPrivateAPIToken } from './service'
+import { TOKEN } from '../types/default'
 
 export const signin = async (login: string, password: string) => fetchPrivateAPIToken(login, password)
 
@@ -8,8 +10,12 @@ export const auth = async () =>
     method: 'get',
   })
 
-export const getUsers = async () =>
+export const logout = () => {
+  ls.remove(TOKEN.PRIVATE)
+}
+
+export const getUsers = async (page: number, perPage: number) =>
   withPrivateAPIToken({
-    url: '/admin/users/get',
+    url: `/admin/users/get?page=${page}&perPage=${perPage}`,
     method: 'get',
   })

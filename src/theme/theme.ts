@@ -182,5 +182,21 @@ export const theme: Theme = createTheme({
         },
       },
     },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            color: `${palette.primary.contrastText}!important`,
+            '&:hover': {
+              color: `${palette.primary.contrastText}!important`,
+              backgroundColor: `${palette.primary.main}!important`,
+            },
+          },
+          '&:hover': {
+            backgroundColor: 'transparent!important',
+          },
+        },
+      },
+    },
   },
 })

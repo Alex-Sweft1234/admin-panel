@@ -9,3 +9,22 @@ body {
   color: #343a40;
   font: $font_primary;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f4f6f9;
+}
+::-webkit-scrollbar-thumb {
+  border: 1px solid #f4f6f9;
+  background: rgba(51, 93, 168, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  background: rgba(51, 93, 168, 0.3);
+  border-radius: 4px;
+}
+
