@@ -14,10 +14,11 @@ export const logout = () => {
   ls.remove(TOKEN.PRIVATE)
 }
 
-export const getChartUsers = async () =>
+export const getChartUsers = async (month?: number) =>
   withPrivateAPIToken({
     url: '/admin/users/chart/get',
-    method: 'get',
+    method: 'post',
+    data: { month },
   })
 
 export const getUsers = async (page: number, perPage: number) =>

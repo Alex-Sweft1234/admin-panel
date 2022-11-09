@@ -1,18 +1,32 @@
 import React, { useCallback, useEffect, useState, SyntheticEvent } from 'react'
-import { Box, Container, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material'
+import {
+  Box,
+  Container,
+  Grid,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIosNew'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { getChartUsers, getUsers } from '../../api'
 import { User } from '../../types/default'
 import { UserEditModal } from './modals'
 import { PaginationCustom } from '../../components/pagination'
 import { UsersChart } from './chart'
+import { phoneFormat } from '../../utils'
 
 type ModalEditProps = {
   user: User
   show: boolean
 }
 
-type UserList = {
+type UserListProps = {
   items: User[]
   page: number
   per_page: number
@@ -20,19 +34,28 @@ type UserList = {
   last_page: number
 }
 
-type UserChart = {
+type UserChartProps = {
   labels: string[]
   datasets: number[]
+  month: {
+    num: number
+    name: string
+  }
 }
 
 export const UsersPage: React.FC = (): JSX.Element => {
   const [page, setPage] = useState<number>(1)
   const [perPage, setPerPage] = useState<number>(6)
-  const [chart, setChart] = useState<UserChart>({
+  const [month, setMonth] = useState<number>(0)
+  const [chart, setChart] = useState<UserChartProps>({
     labels: [],
     datasets: [],
+    month: {
+      num: 0,
+      name: '',
+    },
   })
-  const [users, setUsers] = useState<UserList>({
+  const [users, setUsers] = useState<UserListProps>({
     items: [],
     page,
     per_page: perPage,
@@ -49,9 +72,15 @@ export const UsersPage: React.FC = (): JSX.Element => {
     show: false,
   })
 
-  const usersChart = useCallback(() => {
-    getChartUsers().then((res) => setChart(res.data))
-  }, [])
+  const usersChart = useCallback(
+    (m?: number | undefined) => {
+      getChartUsers(m).then((res) => {
+        setChart(res.data)
+        setMonth(res.data.month.num)
+      })
+    },
+    [month]
+  )
 
   const usersList = useCallback((p: number, per: number) => {
     getUsers(p, per).then((res) => setUsers(res.data))
@@ -61,8 +90,16 @@ export const UsersPage: React.FC = (): JSX.Element => {
     usersList(value, perPage)
   }
 
+  const prevChart = () => {
+    usersChart(month - 1)
+  }
+
+  const nextChart = () => {
+    usersChart(month + 1)
+  }
+
   useEffect(() => {
-    usersChart()
+    usersChart(month > 0 ? month : undefined)
     usersList(page, perPage)
   }, [])
 
@@ -75,9 +112,26 @@ export const UsersPage: React.FC = (): JSX.Element => {
       />
 
       <Container maxWidth="lg">
-        <Box mb={6} width={900}>
+        <Box mb={6} width={1000}>
           <Typography variant="h2">График регистрации пользователей</Typography>
           <UsersChart dataChart={chart} />
+          <Grid container direction="row" justifyContent="center" mt={1}>
+            <Grid item>
+              <Grid container direction="row" wrap="nowrap" alignItems="center" spacing={1}>
+                <Grid item>
+                  <IconButton onClick={prevChart}>
+                    <ArrowBackIosIcon style={{ fontSize: 18 }} />
+                  </IconButton>
+                </Grid>
+                <Grid item>{chart.month.name}</Grid>
+                <Grid item>
+                  <IconButton onClick={nextChart}>
+                    <ArrowForwardIosIcon style={{ fontSize: 18 }} />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
         </Box>
         <Typography variant="h2">Список пользователей</Typography>
         <Table>
@@ -97,7 +151,7 @@ export const UsersPage: React.FC = (): JSX.Element => {
                   <TableCell>{user._id}</TableCell>
                   <TableCell>{user.first_name}</TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.phone}</TableCell>
+                  <TableCell>{phoneFormat(user.phone)}</TableCell>
                   <TableCell>
                     <IconButton>
                       <EditIcon style={{ fontSize: 22 }} onClick={() => setModalEdit({ user, show: true })} />
