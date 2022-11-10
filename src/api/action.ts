@@ -26,3 +26,10 @@ export const getUsers = async (page: number, perPage: number) =>
     url: `/admin/users/get?page=${page}&perPage=${perPage}`,
     method: 'get',
   })
+
+export const getUsersUpdate = async (_id: string, data: any) =>
+  withPrivateAPIToken({
+    url: `/admin/users/update/${_id}`,
+    method: 'patch',
+    data: { ...data },
+  })

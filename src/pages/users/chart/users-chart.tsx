@@ -30,6 +30,7 @@ export const UsersChart: React.FC<IUsersChart> = ({ dataChart }): JSX.Element =>
         label: 'кол-во пользователей',
         data: datasets,
         fill: true,
+        tension: 0.4,
         backgroundColor: 'rgba(51, 93, 168, 0.3)',
         borderColor: 'rgba(51, 93, 168, 1)',
       },
@@ -42,6 +43,9 @@ export const UsersChart: React.FC<IUsersChart> = ({ dataChart }): JSX.Element =>
       legend: {
         position: 'top' as const,
       },
+    },
+    interaction: {
+      intersect: false,
     },
   }
 

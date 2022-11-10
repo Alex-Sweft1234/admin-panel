@@ -102,6 +102,7 @@ export const theme: Theme = createTheme({
       styleOverrides: {
         root: {
           fontSize: 16,
+          color: palette.primary.main,
         },
         shrink: {
           fontSize: 11,

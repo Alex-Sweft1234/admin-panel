@@ -45,7 +45,7 @@ type UserChartProps = {
 
 export const UsersPage: React.FC = (): JSX.Element => {
   const [page, setPage] = useState<number>(1)
-  const [perPage, setPerPage] = useState<number>(6)
+  const [perPage, setPerPage] = useState<number>(10)
   const [month, setMonth] = useState<number>(0)
   const [chart, setChart] = useState<UserChartProps>({
     labels: [],
@@ -108,6 +108,7 @@ export const UsersPage: React.FC = (): JSX.Element => {
       <UserEditModal
         user={modalEdit.user}
         show={modalEdit.show}
+        updateUser={() => usersList(page, perPage)}
         onClose={() => setModalEdit({ ...modalEdit, show: false })}
       />
 
