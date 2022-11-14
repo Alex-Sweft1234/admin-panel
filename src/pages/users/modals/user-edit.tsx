@@ -23,8 +23,9 @@ type BtnProps = {
   phone: boolean
 }
 
-const schema = validation({
-  first_name: yup.string().required().min(2).max(20),
+const schemaName = validation({ first_name: yup.string().required().min(2).max(20) })
+
+const schemaEmail = validation({
   email: yup
     .string()
     .required()
@@ -49,19 +50,19 @@ export const UserEditModal: React.FC<IUserEditModal> = ({
 
   const hookFormFirstName = useForm<{ first_name: string }>({
     defaultValues: { first_name: '' },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaName),
     mode: 'onBlur',
   })
 
   const hookFormEmail = useForm<{ email: string }>({
     defaultValues: { email: '' },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaEmail),
     mode: 'onBlur',
   })
 
   const hookFormPhone = useForm<{ phone: string }>({
-    defaultValues: {},
-    resolver: yupResolver(schema),
+    defaultValues: { phone: '' },
+    resolver: yupResolver(schemaName),
     mode: 'onBlur',
   })
 
@@ -71,7 +72,7 @@ export const UserEditModal: React.FC<IUserEditModal> = ({
   }
 
   const editBtn = (edit: any) => {
-    setBtn({ ...btn, ...edit })
+    setBtn({ ...defaultBtn, ...edit })
   }
 
   const editConfirm = (data: any) => {
@@ -84,7 +85,7 @@ export const UserEditModal: React.FC<IUserEditModal> = ({
   }
 
   const editRejectBtn = (edit: any) => {
-    setBtn({ ...btn, ...edit })
+    setBtn({ ...defaultBtn, ...edit })
   }
 
   useEffect(() => {
@@ -96,7 +97,7 @@ export const UserEditModal: React.FC<IUserEditModal> = ({
       <Box className={classes.titleItem} mb="6px">
         id: <span id="val">{user._id}</span>
       </Box>
-      <form onSubmit={hookFormFirstName.handleSubmit(editConfirm)} autoComplete="off" noValidate>
+      <form key="form-name" onSubmit={hookFormFirstName.handleSubmit(editConfirm)} autoComplete="off" noValidate>
         <Grid container direction="row" justifyContent="space-between" alignItems="center">
           <Grid item>
             <Box className={classes.titleItem}>
@@ -129,7 +130,7 @@ export const UserEditModal: React.FC<IUserEditModal> = ({
           </Grid>
         </Grid>
       </form>
-      <form onSubmit={hookFormEmail.handleSubmit(editConfirm)} autoComplete="off" noValidate>
+      <form key="form-email" onSubmit={hookFormEmail.handleSubmit(editConfirm)} autoComplete="off" noValidate>
         <Grid container direction="row" justifyContent="space-between" alignItems="center">
           <Grid item>
             <Box className={classes.titleItem}>
